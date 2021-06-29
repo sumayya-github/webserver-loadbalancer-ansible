@@ -1,0 +1,21 @@
+hosts: localhost
+  gather_facts: False
+  vars_files:
+    - credentials.yml
+  tasks:
+  - name: Provisioning EC2 Instance for WebServer
+    ec2:
+      key_name: "<key_name>"
+      instance_type: "t2.micro"
+      image: "<ami_id>"
+      wait: yes
+      instance_tags:
+        Name: WebServer
+      count: 1
+      vpc_subnet_id: "<subnet_id>"
+      assign_public_ip: yes
+      region: "ap-south-1"
+      state: present
+      group_id: "<sg_name>"
+      aws_access_key: "{{ access }}"
+      aws_secret_key: "{{ secret }}"
